@@ -1,0 +1,33 @@
+Export:
+COPY (select * from megapos_orders) TO 'C:\Driver\test_orders.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_orderitems) TO 'C:\Driver\test_orderitems.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_groups) TO 'C:\Driver\test_groups.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_customers) TO 'C:\Driver\test_customers.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_orderitemstaffs) TO 'C:\Driver\test_orderitemstaffs.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_payments) TO 'C:\Driver\test_payments.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_voiditems) TO 'C:\Driver\test_voiditems.csv' DELIMITER ',' CSV HEADER;
+
+
+REMARKS:
+COPY (select * from megapos_remarks) TO 'C:\JL_remarks.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_remarkcategories) TO 'C:\JL_remarkc.csv' DELIMITER ',' CSV HEADER;
+
+
+import:
+
+delete from megapos_remarks;
+delete from megapos_remarkcategories;
+copy megapos_remarks from 'C:\db\remarks.csv' DELIMITER ',' CSV HEADER;
+COPY megapos_remarkcategories from 'C:\db\remarkc.csv' DELIMITER ',' CSV HEADER;
+select setval('megapos_remarkid_seq', 560);
+select setval('megapos_remarkcategories_categoryid_seq', 30);
+
+
+COPY (select * from megapos_orders Order by orderid DESC LIMIT 100) TO 'C:\Driver\test_orders.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_groups) TO 'C:\Driver\test_groups.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_payments Order by paymentid DESC LIMIT 100) TO 'C:\Driver\test_payments.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_voiditems Order by orderid DESC LIMIT 100) TO 'C:\Driver\test_voiditems.csv' DELIMITER ',' CSV HEADER;
+
+COPY (select * from megapos_orderitems Order by orderid DESC LIMIT 100) TO 'C:\Driver\test_orderitems.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_customers) TO 'C:\Driver\test_customers.csv' DELIMITER ',' CSV HEADER;
+COPY (select * from megapos_orderitemstaffs Order by orderid DESC LIMIT 100) TO 'C:\Driver\test_orderitemstaffs.csv' DELIMITER ',' CSV HEADER;
